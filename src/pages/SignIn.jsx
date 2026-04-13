@@ -1,82 +1,112 @@
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import api from "../services/api";
+import { useNavigate } from "react-router-dom";
 
-export default function SignIn(){
-
- const [formData, setFormData] = useState({
+export default function Login() {
+  const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [e.target.name]: e.target.value,
-    });
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
     setLoading(true);
+    setError("");
 
     try {
       const res = await api.post("/api/v1/auth/signin", formData);
-      console.log(res.data); // success
+      console.log(res);
       navigate("/transactions");
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed");
+      setError("Login failed");
     } finally {
       setLoading(false);
     }
   };
-   return (
-    <div className="h-screen flex items-center justify-center">
-      <form
-        onSubmit={handleSubmit}
-        className=" w-85 p-6 border rounded-lg shadow-md flex flex-col gap-4"
-      >
-        <h2 className="text-xl font-semibold text-center">Login</h2>
 
-        {/* Email */}
-        <input
-          type="email"
-          name="email"
-          placeholder="Enter email"
-          value={formData.email}
-          onChange={handleChange}
-          className="border p-2 rounded"
-          required
-        />
+  return (
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+        
+        {/* Header */}
+        <div className="mb-6 text-center">
+          <h1 className="text-2xl font-bold text-gray-800">
+            Welcome Back
+          </h1>
+          <p className="text-sm text-gray-500">
+            Login to your account
+          </p>
+        </div>
 
-        {/* Password */}
-        <input
-          type="password"
-          name="password"
-          placeholder="Enter password"
-          value={formData.password}
-          onChange={handleChange}
-          className="border p-2 rounded"
-          required
-        />
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          
+          {/* Email */}
+          <div>
+            <label className="text-sm text-gray-600">Email</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="you@example.com"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="w-full mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+            />
+          </div>
 
-        {/* Error */}
-        {error && <p className="text-red-500 text-sm">{error}</p>}
+          {/* Password */}
+          <div>
+            <label className="text-sm text-gray-600">Password</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="••••••••"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              className="w-full mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+            />
+          </div>
 
-        {/* Button */}
-        <button
-          type="submit"
-          disabled={loading}
-          className="bg-black text-white p-2 rounded hover:opacity-90"
-        >
-          {loading ? "Logging in..." : "Login"}
-        </button>
-      </form>
-    </div>
+          {/* Error */}
+          {error && (
+            <p className="text-red-500 text-sm">{error}</p>
+          )}
+
+          {/* Button */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="mt-2 bg-black text-white py-2 rounded-lg hover:opacity-90 transition"
+          >
+            {loading ? "Logging in..." : "Login"}
+          </button>
+        </form>
+
+        {/* Footer */}
+        <p className="text-sm text-center text-gray-500 mt-6">
+          Don’t have an account?{" "}
+          <Link
+            to="/signup"
+            className="text-black font-medium hover:underline"
+          >
+            Create account
+          </Link>
+        </p>
+      </div>
+   
   );
 }
