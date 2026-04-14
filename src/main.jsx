@@ -12,6 +12,7 @@ import Insight from './pages/Insight.jsx'
 import Profile from './pages/Profile.jsx'
 import Home from './pages/Home.jsx'
 import Users from './pages/Users.jsx'
+import CreateTransaction from './pages/Createtransaction.jsx'
 
 
 
@@ -21,9 +22,10 @@ const router = createBrowserRouter(
       <Route path='' element={<Home/>}/>
       <Route path='signin' element={<SignIn/>}/>
       <Route path='signup' element={<SignUp/>}/>
+      <Route path='create-transaction'element={<CreateTransaction/>}/>
       <Route path='transactions'element={<TransactionList/>}/>
       <Route path='users' element={<Users/>}/>
-      <Route path='admin-request' element={<AdminRequest/>}/>
+      <Route path='admin-requests' element={<AdminRequest/>}/>
       <Route path='profile' element={<Profile/>}/>
       <Route path='insights' element={<Insight/>}/>
     </Route>
