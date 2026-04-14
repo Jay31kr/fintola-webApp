@@ -4,6 +4,7 @@ import './index.css'
 import App from './App.jsx'
 import { Provider } from 'react-redux'
 
+import { store } from './store/store.js'
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
 import TransactionList from './pages/TransactionList.jsx'
 import AdminRequest from './pages/AdminRequest.jsx'

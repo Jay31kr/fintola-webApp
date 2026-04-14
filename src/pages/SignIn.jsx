@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import api from "../services/api.js";
 import toast from "react-hot-toast";
+import api from "../services/api.js";
+import { setUser } from "../store/features/AuthSlice.js";
 
 export default function Signin() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -35,6 +38,7 @@ export default function Signin() {
       await api.post("/api/v1/auth/signin", formData);
 
       toast.success("Logged in successfully");
+      dispatch(setUser(res.data.user));
       navigate("/transactions");
 
     } catch (err) {
