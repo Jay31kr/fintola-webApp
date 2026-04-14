@@ -1,112 +1,117 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import api from "../services/api";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import api from "../services/api.js";
+import toast from "react-hot-toast";
 
-export default function Login() {
+export default function Signin() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  const navigate = useNavigate();
-
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
-  const handleChange = (e) => {
+  const handleChange = (field, value) => {
     setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [field]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (loading) return;
+
+    if (!formData.email || !formData.password) {
+      return toast.error("All fields are required");
+    }
+
     setLoading(true);
-    setError("");
 
     try {
-      const res = await api.post("/api/v1/auth/signin", formData);
-      console.log(res);
+      await api.post("/api/v1/auth/signin", formData);
+
+      toast.success("Logged in successfully");
       navigate("/transactions");
+
     } catch (err) {
-      setError("Login failed");
+      const message =
+        err.response?.data?.message || "Login failed";
+
+      toast.error(message);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
-        
-        {/* Header */}
+    <div className="flex items-center justify-center min-h-[80vh]">
+
+      <div className="w-full max-w-md bg-white border border-gray-200 rounded-2xl shadow-md p-6">
+
+        {/* 🔥 HEADER */}
         <div className="mb-6 text-center">
-          <h1 className="text-2xl font-bold text-gray-800">
-            Welcome Back
+          <h1 className="text-xl font-semibold text-slate-900">
+            Welcome back
           </h1>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-slate-500">
             Login to your account
           </p>
         </div>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          
-          {/* Email */}
+        {/* FORM */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+
+          {/* EMAIL */}
           <div>
-            <label className="text-sm text-gray-600">Email</label>
+            <label className="text-sm text-slate-600">Email</label>
             <input
               type="email"
-              name="email"
-              placeholder="you@example.com"
               value={formData.email}
-              onChange={handleChange}
-              required
-              className="w-full mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+              onChange={(e) =>
+                handleChange("email", e.target.value)
+              }
+              className="w-full mt-1 border border-gray-300 px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
             />
           </div>
 
-          {/* Password */}
+          {/* PASSWORD */}
           <div>
-            <label className="text-sm text-gray-600">Password</label>
+            <label className="text-sm text-slate-600">Password</label>
             <input
               type="password"
-              name="password"
-              placeholder="••••••••"
               value={formData.password}
-              onChange={handleChange}
-              required
-              className="w-full mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+              onChange={(e) =>
+                handleChange("password", e.target.value)
+              }
+              className="w-full mt-1 border border-gray-300 px-3 py-2 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 transition"
             />
           </div>
 
-          {/* Error */}
-          {error && (
-            <p className="text-red-500 text-sm">{error}</p>
-          )}
-
-          {/* Button */}
+          {/* BUTTON */}
           <button
             type="submit"
             disabled={loading}
-            className="mt-2 bg-black text-white py-2 rounded-lg hover:opacity-90 transition"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm font-medium shadow-sm hover:shadow-md transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
-        {/* Footer */}
-        <p className="text-sm text-center text-gray-500 mt-6">
+        {/* FOOTER */}
+        <p className="text-sm text-center text-gray-500 mt-5">
           Don’t have an account?{" "}
           <Link
             to="/signup"
-            className="text-black font-medium hover:underline"
+            className="text-blue-600 hover:underline font-medium"
           >
             Create account
           </Link>
         </p>
       </div>
-   
+    </div>
   );
 }

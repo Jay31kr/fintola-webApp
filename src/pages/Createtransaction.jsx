@@ -78,16 +78,12 @@ export default function CreateTransaction() {
         status: "pending",
         date: "",
       });
-
-      // ✅ redirect
-      navigate("/transactions");
-
     } catch (err) {
       const message =
         err.response?.data?.message || "Failed to create transaction";
 
       setError(message);
-      toast.error(message); // ✅ fixed bug
+      toast.error(message); 
     } finally {
       setLoading(false);
     }
