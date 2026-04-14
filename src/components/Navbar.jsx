@@ -1,10 +1,13 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
-
+  const { user, isAuthenticated, loading } = useSelector(
+  (state) => state.auth
+  );
   const navItems = [
     { name: "Transactions", path: "/transactions" },
     { name: "Users", path: "/users" },
@@ -26,7 +29,9 @@ export default function Navbar() {
         </Link>
 
         {/* 🔥 NAV LINKS */}
-        <div className="hidden md:flex gap-8 text-sm font-medium">
+        {
+          isAuthenticated && (
+          <div className="hidden md:flex gap-8 text-sm font-medium">
           {navItems.map((item) => {
             const isActive = location.pathname === item.path;
 
@@ -45,9 +50,12 @@ export default function Navbar() {
             );
           })}
         </div>
+          )
+     }
 
         {/* 🔥 RIGHT SIDE */}
-        <div className="hidden md:flex items-center gap-3">
+        { !isAuthenticated &&
+            ( <div className="hidden md:flex items-center gap-3">
           <Link
             to="/signin"
             className="text-sm text-gray-600 hover:text-blue-600 transition"
@@ -61,7 +69,9 @@ export default function Navbar() {
           >
             Sign Up
           </Link>
-        </div>
+        </div>)
+        }
+       
 
         {/* 🔥 MOBILE MENU BUTTON */}
         <button
@@ -74,34 +84,55 @@ export default function Navbar() {
 
       {/* 🔥 MOBILE MENU */}
       {open && (
-        <div className="md:hidden px-6 pb-4 flex flex-col gap-3 text-sm text-gray-700 border-t">
+  <div className="md:hidden px-6 pb-4 flex flex-col gap-3 text-sm text-gray-700 border-t">
 
-          {navItems.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              onClick={() => setOpen(false)}
-              className="py-1"
-            >
-              {item.name}
-            </Link>
-          ))}
-
-          <hr />
-
-          <Link to="/login" onClick={() => setOpen(false)}>
-            Login
-          </Link>
-
+    {/* 🔐 Logged-in user */}
+    {!loading && isAuthenticated && (
+      <>
+        {navItems.map((item) => (
           <Link
-            to="/signup"
+            key={item.path}
+            to={item.path}
             onClick={() => setOpen(false)}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg text-center"
+            className="py-1"
           >
-            Sign Up
+            {item.name}
           </Link>
-        </div>
-      )}
+        ))}
+
+        <hr />
+
+        <button
+          onClick={() => {
+            handleLogout();
+            setOpen(false);
+          }}
+          className="text-left py-1 text-red-600"
+        >
+          Logout
+        </button>
+      </>
+    )}
+
+    {/* 🔓 Not logged in */}
+    {!loading && !isAuthenticated && (
+      <>
+        <Link to="/signin" onClick={() => setOpen(false)}>
+          Login
+        </Link>
+
+        <Link
+          to="/signup"
+          onClick={() => setOpen(false)}
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg text-center"
+        >
+          Sign Up
+        </Link>
+      </>
+    )}
+
+    </div>
+    )}
     </nav>
   );
 }

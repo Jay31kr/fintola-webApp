@@ -134,7 +134,7 @@ export default function TransactionList() {
           className="border border-gray-300 px-3 py-2 rounded-lg text-sm focus:ring-2 focus:ring-blue-500"
         >
           <option value="">Status</option>
-          <option value="completed">Approved</option>
+          <option value="approved">Approved</option>
           <option value="pending">Pending</option>
           <option value="reject">Rejected</option>
         </select>

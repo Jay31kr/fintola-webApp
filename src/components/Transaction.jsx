@@ -136,13 +136,6 @@ export default function Transaction({
             >
               Save
             </button>
-
-            <button
-              onClick={() => onEdit(null)}
-              className="text-gray-500 hover:text-gray-700 font-medium"
-            >
-              Cancel
-            </button>
           </>
         ) : (
           <button
