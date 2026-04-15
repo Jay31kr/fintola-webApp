@@ -39,7 +39,7 @@ export default function Signup() {
 
     try {
       setLoading(true);
-      const res = await api.post("/api/v1/auth/signup", formData);
+      const res = await api.post("/auth/signup", formData);
       dispatch(setUser(res.data.user));
       toast.success("Account created successfully");
       setTimeout(() => {

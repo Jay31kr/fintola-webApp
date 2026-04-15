@@ -20,7 +20,7 @@ export default function User({ user, refresh }) {
   const handleSave = async () => {
     try {
       setLoading(true);
-      await api.patch(`/api/v1/admin/users/${user._id}`, formData);
+      await api.patch(`/admin/users/${user._id}`, formData);
 
       toast.success("User updated");
       setEditMode(false);
@@ -32,22 +32,7 @@ export default function User({ user, refresh }) {
     }
   };
 
-  const handleDelete = async () => {
-    if (!window.confirm("Delete this user?")) return;
-
-    try {
-      setLoading(true);
-      await api.delete(`/api/v1/users/${user._id}`);
-
-      toast.success("User deleted");
-      refresh();
-    } catch (err) {
-      toast.error("Delete failed");
-    } finally {
-      setLoading(false);
-    }
-  };
-
+  
   return (
     <div className="grid grid-cols-6 px-4 py-4 text-sm items-center border-t hover:bg-gray-50 transition">
       

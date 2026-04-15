@@ -9,7 +9,7 @@ export default function Request({ request, refresh }) {
     try {
       setLoading(true);
 
-      await api.patch(`/api/v1/admin/requests/${request._id}`, {
+      await api.patch(`/admin/requests/${request._id}`, {
         action,
       });
 

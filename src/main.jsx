@@ -24,19 +24,19 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App/>}>
       <Route path='' element={
-        <PublicRoute>
+        // <PublicRoute>
           <Home/>
-         </PublicRoute>   
+        //  </PublicRoute>   
         }/>
       <Route path='signin' element={
-        <PublicRoute>
+        // <PublicRoute>
           <SignIn/>
-         </PublicRoute> 
+        //  </PublicRoute> 
         }/>
       <Route path='signup' element={
-        <PublicRoute>
+        // <PublicRoute>
           <SignUp/>
-        </PublicRoute>
+        // </PublicRoute>
         }/>
 <Route
   path='create-transaction'
@@ -46,29 +46,29 @@ const router = createBrowserRouter(
     // </ProtectedRoute>
   }
 />      <Route path='transactions'element={
-        <ProtectedRoute minRole='viewer'>
+        // <ProtectedRoute minRole='viewer'>
           <TransactionList/>
-        </ProtectedRoute>
+        // </ProtectedRoute>
         }/>
       <Route path='users' element={
-        <ProtectedRoute minRole='admin'>
+        // <ProtectedRoute minRole='admin'>
           <Users/>
-        </ProtectedRoute>  
+        // </ProtectedRoute>  
         }/>
       <Route path='admin-requests' element={
-        <ProtectedRoute minRole='admin'>
+        // <ProtectedRoute minRole='admin'>
           <AdminRequest/>
-        </ProtectedRoute>  
+        // </ProtectedRoute>  
         }/>
       <Route path='profile' element={
-        <PublicRoute>
+        // <PublicRoute>
            <Profile/>
-        </PublicRoute>
+        // </PublicRoute>
        }/>
       <Route path='insights' element={
-      <ProtectedRoute minRole='analyst'>
+      // <ProtectedRoute minRole='analyst'>
           <Insight/>
-       </ProtectedRoute> 
+      //  </ProtectedRoute> 
         }/>
     </Route>
   )

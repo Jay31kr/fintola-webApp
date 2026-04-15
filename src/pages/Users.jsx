@@ -17,7 +17,7 @@ export default function Users() {
     try {
       setLoading(true);
 
-      const res = await api.get("/api/v1/admin/", {
+      const res = await api.get("/admin/", {
         params: {
           page,
           limit: 10,

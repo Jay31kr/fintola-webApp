@@ -64,7 +64,7 @@ export default function CreateTransaction() {
         date: new Date(formData.date),
       };
 
-      await api.post("/api/v1/transactions/create", payload);
+      await api.post("/transactions/create", payload);
 
       toast.success("Transaction created successfully");
 

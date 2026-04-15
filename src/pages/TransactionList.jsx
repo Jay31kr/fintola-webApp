@@ -47,7 +47,7 @@ export default function TransactionList() {
   const fetchTransactions = async () => {
     try {
       setLoading(true);
-      const res = await api.get(`/api/v1/transactions/view?${buildQuery()}`);
+      const res = await api.get(`/transactions/view?${buildQuery()}`);
       const data = res.data.data;
 
       setTransactions(data.results);
@@ -69,7 +69,7 @@ export default function TransactionList() {
 
   const handleDelete = async (id) => {
     try {
-      await api.delete(`/api/v1/transactions/${id}`);
+      await api.delete(`/transactions/${id}`);
       fetchTransactions();
     } catch (err) {
       console.error(err.response?.data || err.message);
@@ -83,7 +83,7 @@ export default function TransactionList() {
 
   const handleSave = async () => {
     try {
-      await api.patch(`/api/v1/transactions/${editingId}`, editData);
+      await api.patch(`/transactions/${editingId}`, editData);
       setEditingId(null);
       fetchTransactions();
     } catch (err) {

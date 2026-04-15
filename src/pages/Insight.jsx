@@ -28,7 +28,7 @@ export default function Insights() {
   const fetchInsights = async () => {
     try {
       setLoading(true);
-      const res = await api.get("/api/v1/transactions/insights");
+      const res = await api.get("/transactions/insights");
       setData(res.data.data);
     } catch {
       toast.error("Failed to load insights");

@@ -35,7 +35,7 @@ export default function Signin() {
     setLoading(true);
 
     try {
-      const res = await api.post("/api/v1/auth/signin", formData);
+      const res = await api.post("/auth/signin", formData);
         console.log(res , res.data , res.data.data , res.data.data.user);
       dispatch(setUser(res.data.data.user));
       toast.success("Logged in successfully");

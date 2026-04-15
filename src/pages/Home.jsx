@@ -24,13 +24,6 @@ export default function Home() {
           >
             Get Started
           </button>
-
-          <button
-            onClick={() => navigate("/transactions")}
-            className="border px-6 py-3 rounded-xl hover:bg-gray-100 transition"
-          >
-            View Demo
-          </button>
         </div>
       </section>
 

@@ -13,7 +13,7 @@ export default function AdminRequest() {
     try {
       setLoading(true);
 
-      const res = await api.get("/api/v1/admin/requests", {
+      const res = await api.get("/admin/requests", {
         params: { page, limit: 10 },
       });
 

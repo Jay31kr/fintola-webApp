@@ -16,7 +16,7 @@ function App() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await api.get("/api/v1/auth/me");
+        const res = await api.get("/auth/me");
 
         const user = res.data?.data?.user;
 
