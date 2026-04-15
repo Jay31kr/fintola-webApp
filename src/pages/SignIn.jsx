@@ -37,8 +37,8 @@ export default function Signin() {
     try {
       const res = await api.post("/api/v1/auth/signin", formData);
 
-      toast.success("Logged in successfully");
       dispatch(setUser(res.data.user));
+      toast.success("Logged in successfully");
       navigate("/transactions");
 
     } catch (err) {
