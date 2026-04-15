@@ -15,8 +15,8 @@ function App() {
         dispatch(setLoading(true));
 
         const res = await api.get("/api/v1/auth/me");
-
-        dispatch(setUser(res.data.user));
+        
+        dispatch(setUser(res.data.data.user));
       } catch (err) {
         dispatch(clearUser());
       } finally {

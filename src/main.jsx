@@ -15,21 +15,61 @@ import Profile from './pages/Profile.jsx'
 import Home from './pages/Home.jsx'
 import Users from './pages/Users.jsx'
 import CreateTransaction from './pages/Createtransaction.jsx'
+import PublicRoute from './components/PublicRoute.jsx'
+import ProtectedRoute from './components/ProtectedRoute.jsx'
 
 
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App/>}>
-      <Route path='' element={<Home/>}/>
-      <Route path='signin' element={<SignIn/>}/>
-      <Route path='signup' element={<SignUp/>}/>
-      <Route path='create-transaction'element={<CreateTransaction/>}/>
-      <Route path='transactions'element={<TransactionList/>}/>
-      <Route path='users' element={<Users/>}/>
-      <Route path='admin-requests' element={<AdminRequest/>}/>
-      <Route path='profile' element={<Profile/>}/>
-      <Route path='insights' element={<Insight/>}/>
+      <Route path='' element={
+        <PublicRoute>
+          <Home/>
+         </PublicRoute>   
+        }/>
+      <Route path='signin' element={
+        <PublicRoute>
+          <SignIn/>
+         </PublicRoute> 
+        }/>
+      <Route path='signup' element={
+        <PublicRoute>
+          <SignUp/>
+        </PublicRoute>
+        }/>
+<Route
+  path='create-transaction'
+  element={
+    // <ProtectedRoute minRole="admin">
+      <CreateTransaction/>
+    // </ProtectedRoute>
+  }
+/>      <Route path='transactions'element={
+        <ProtectedRoute minRole='viewer'>
+          <TransactionList/>
+        </ProtectedRoute>
+        }/>
+      <Route path='users' element={
+        <ProtectedRoute minRole='admin'>
+          <Users/>
+        </ProtectedRoute>  
+        }/>
+      <Route path='admin-requests' element={
+        <ProtectedRoute minRole='admin'>
+          <AdminRequest/>
+        </ProtectedRoute>  
+        }/>
+      <Route path='profile' element={
+        <PublicRoute>
+           <Profile/>
+        </PublicRoute>
+       }/>
+      <Route path='insights' element={
+      <ProtectedRoute minRole='analyst'>
+          <Insight/>
+       </ProtectedRoute> 
+        }/>
     </Route>
   )
 )

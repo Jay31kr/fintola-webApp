@@ -130,17 +130,10 @@ export default function User({ user, refresh }) {
             onClick={() => setEditMode(true)}
             className="text-blue-600 hover:text-blue-700 font-medium"
           >
-            Edit
+           Update
           </button>
         )}
 
-        <button
-          onClick={handleDelete}
-          disabled={loading}
-          className="text-red-600 hover:text-red-700 font-medium disabled:opacity-50"
-        >
-          Delete
-        </button>
       </div>
     </div>
   );
