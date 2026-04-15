@@ -4,7 +4,11 @@ import { Outlet } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import { Toaster } from "react-hot-toast";
 import { useDispatch } from "react-redux";
-import { setUser , clearUser , setLoading } from "./store/features/AuthSlice.js";
+import {
+  setUser,
+  clearUser,
+  setLoading,
+} from "./store/features/AuthSlice.js";
 
 function App() {
   const dispatch = useDispatch();
@@ -12,20 +16,24 @@ function App() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        dispatch(setLoading(true));
-
         const res = await api.get("/api/v1/auth/me");
-        
-        dispatch(setUser(res.data.data.user));
+
+        const user = res.data?.data?.user;
+
+        if (user) {
+          dispatch(setUser(user));
+        } else {
+          dispatch(clearUser());
+        }
       } catch (err) {
         dispatch(clearUser());
       } finally {
-        dispatch(setLoading(false));
+        dispatch(setLoading(false)); // 🔥 MUST ALWAYS RUN
       }
     };
 
     fetchUser();
-  }, [dispatch]);
+  }, []);
 
   return (
     <main className="min-h-screen bg-[#F8FAFC]">

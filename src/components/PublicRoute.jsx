@@ -6,8 +6,12 @@ export default function PublicRoute({ children }) {
     (state) => state.auth
   );
 
-  if (loading) return null;
+  // ✅ wait
+  if (loading) {
+    return <div className="p-6 text-center">Loading...</div>;
+  }
 
+  // ✅ redirect only when stable
   if (isAuthenticated) {
     return <Navigate to="/transactions" replace />;
   }

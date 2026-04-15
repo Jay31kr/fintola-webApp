@@ -12,21 +12,26 @@ export default function ProtectedRoute({ children, minRole = "viewer" }) {
     (state) => state.auth
   );
 
+  // ✅ WAIT until auth is resolved
   if (loading) {
-  return <div className="p-6 text-center">Loading...</div>;
-}
+    return <div className="p-6 text-center">Loading...</div>;
+  }
 
-  // 🔐 Not logged in
-  if (!isAuthenticated) {
+  // 🔴 CRITICAL FIX: check BOTH together
+  if (!isAuthenticated && !user) {
     return <Navigate to="/signin" replace />;
   }
 
-  // 🔒 Role check
-  const userLevel = roleHierarchy[user?.role] || 0;
+  // ⛔ wait if user not yet hydrated
+  if (!user) {
+    return <div className="p-6 text-center">Loading...</div>;
+  }
+
+  // 🔒 role check
+  const userLevel = roleHierarchy[user.role];
   const requiredLevel = roleHierarchy[minRole];
 
   if (userLevel < requiredLevel) {
-    console.log(userLevel , requiredLevel);
     return (
       <div className="p-6 text-center text-red-600">
         You are not authorized to access this page
