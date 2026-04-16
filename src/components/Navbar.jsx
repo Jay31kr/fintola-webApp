@@ -15,6 +15,18 @@ export default function Navbar() {
     { name: "Insights", path: "/insights" },
   ];
 
+  const handleLogOut =async ()=>{
+    try {
+      await api.post("/auth/signout");      
+      dispatch(clearUser());
+      toast.success("Logged out successfully");
+      navigate("/signin");
+    } catch (err) {
+      console.error("Logout failed:", err);
+      toast.error("Failed to logout");
+    }
+  }
+
   return (
     <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur border-b border-gray-200">
 
