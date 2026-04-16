@@ -1,11 +1,12 @@
 {
+  "version": 2,
   "rewrites": [
     {
       "source": "/api/:path*",
       "destination": "https://fintola.onrender.com/api/v1/:path*"
     },
     {
-      "source": "/(.*)",
+      "source": "/((?!api/).*)",
       "destination": "/index.html"
     }
   ]

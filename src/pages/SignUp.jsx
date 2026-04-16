@@ -40,10 +40,10 @@ export default function Signup() {
     try {
       setLoading(true);
       const res = await api.post("/auth/signup", formData);
-      dispatch(setUser(res.data.user));
+    //   dispatch(setUser(res.data.user));
       toast.success("Account created successfully");
       setTimeout(() => {
-        navigate("/transactions");
+        navigate("/signin");
       }, 800);
     } catch (err) {
       toast.error(err?.response?.data?.message || "Signup failed");
